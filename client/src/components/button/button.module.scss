@@ -1,0 +1,22 @@
+/* button.module.scss */
+.cuteButton {
+  background-color: #ff69b4; /* Soft pink background */
+  color: #ffffff; /* White text for contrast */
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+}
+
+.cuteButton:hover {
+  background-color: #ff3385; /* Darker pink on hover */
+  transform: scale(1.05); /* Slight scaling effect */
+}
+
+.cuteButton:focus {
+  outline: none; /* Remove default focus outline */
+  border: 2px solid #ff3385; /* Custom border on focus */
+}

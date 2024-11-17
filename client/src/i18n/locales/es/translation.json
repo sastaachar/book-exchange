@@ -1,0 +1,10 @@
+{
+  "Home": "Inicio",
+  "Login": "Iniciar sesión",
+  "ChangeLanguage": "Cambiar idioma",
+  "Username": "Nombre de usuario",
+  "Password": "Contraseña",
+  "LoginPage": "Página de inicio de sesión",
+  "SignUp": "Registrarse",
+  "PasswordDontMatch": "Las contraseñas no coinciden"
+}

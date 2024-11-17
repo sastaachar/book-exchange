@@ -1,0 +1,21 @@
+/* container.module.scss */
+.vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Center items more effectively */
+  height: 100%;
+  padding: 20px; /* Adds padding to avoid edges */
+  background-color: #f4f4f9; /* Light background for contrast */
+}
+
+.horizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: #ffffff; /* Clean white background */
+  padding: 10px 20px; /* Spacing between items */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}

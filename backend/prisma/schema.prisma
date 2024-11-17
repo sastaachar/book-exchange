@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                   Int            @id @default(autoincrement())
+  name                 String
+  password             String
+  email                String         @unique
+  preferredAppLanguage String? // Optional field for preferred language
+  profileImageUrl      String? // Optional field for profile image URL
+  BookQueue            BookQueue[] // One-to-many relation with BookQueue
+  BookRequests         BookRequests[]
+}
+
+model BookQueue {
+  id               Int       @id @default(autoincrement())
+  userId           Int // Foreign key referencing the User model
+  bookName         String // Name of the book
+  bookAuthor       String? // Author of the book
+  exchangeLocation String? // Location for exchanging the book
+  status           String    @default("pending") // Status of the book queue (e.g., "pending", "accepted", "completed")
+  acceptedUser     String? // ID of the user who accepted the book exchange (optional)
+  from             DateTime? // Start date for the exchange
+  to               DateTime? // End date for the exchange
+  start            DateTime
+
+  user         User           @relation(fields: [userId], references: [id]) // Foreign key relation with User
+  BookRequests BookRequests[]
+}
+
+model BookRequests {
+  id          Int @id @default(autoincrement())
+  fromUserId  Int // ID of the user making the request
+  bookQueueId Int // ID of the BookQueue related to the request
+
+  fromUser  User      @relation(fields: [fromUserId], references: [id]) // Relation for the requesting user
+  bookQueue BookQueue @relation(fields: [bookQueueId], references: [id]) // Relation to BookQueue
+}

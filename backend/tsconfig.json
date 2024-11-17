@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "rootDir": "./",
+    "baseUrl": "./",
+    "esModuleInterop": true,
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "declaration": true,
+    "paths": {
+      "@database": ["./src/database"],
+      "@utils": ["./src/utils"],
+      "@schemas": ["./src/schemas"],
+      "@services": ["./src/services"]
+    },
+    "lib": ["es5", "es6", "dom", "dom.iterable"],
+    "typeRoots": ["./custom.d.ts"]
+  },
+  "ts-node": {
+    "files": true
+  }
+}

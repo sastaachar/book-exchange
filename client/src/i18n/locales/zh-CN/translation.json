@@ -1,0 +1,10 @@
+{
+  "Home": "主页",
+  "Login": "登录",
+  "ChangeLanguage": "切换语言",
+  "Username": "用户名",
+  "Password": "密码",
+  "LoginPage": "登录页面",
+  "SignUp": "注册",
+  "PasswordDontMatch": "密码不匹配"
+}
