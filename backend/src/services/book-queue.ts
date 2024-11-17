@@ -1,7 +1,7 @@
 import { prisma } from "@database";
 import { BookQueue } from "@prisma/client";
 import { BookQueueSchema } from "@schemas";
-import { serviceWrapper } from "@utils";
+import { formatUnixToPostgresTimestamp, serviceWrapper } from "@utils";
 import { z } from "zod";
 
 /**
@@ -12,11 +12,11 @@ import { z } from "zod";
  */
 export const createBookQueue = serviceWrapper(
   async (
-    bookQueueParams: z.infer<typeof BookQueueSchema>
+    bookQueueParams: z.infer<typeof BookQueueSchema> & { userId: number }
   ): Promise<BookQueue> => {
-    const start = Date.now().toString();
+    const start = new Date(Date.now()).toISOString();
     const bookQueue = await prisma.bookQueue.create({
-      data: { ...bookQueueParams, start },
+      data: { status: "pending", ...bookQueueParams, start },
     });
     return bookQueue;
   }
@@ -59,5 +59,40 @@ export const getBookQueue = serviceWrapper(
     }
 
     return bookQueue;
+  }
+);
+
+/**
+ * Retrieves multiple BookQueue entry by its ID.
+ *
+ * @param {number} bookQueueId - The ID of the BookQueue entry to retrieve.
+ * @returns {Promise<BookQueue | null>} - The retrieved BookQueue entry or null if not found.
+ */
+export const getMultipleBookQueue = serviceWrapper(
+  async (
+    bookQueueParams: Partial<z.infer<typeof BookQueueSchema>>
+  ): Promise<BookQueue[]> => {
+    const bookQueues = await prisma.bookQueue.findMany({
+      where: {
+        AND: [
+          {
+            bookAuthor: {
+              startsWith: bookQueueParams.bookAuthor || "",
+            },
+          },
+          {
+            bookName: {
+              startsWith: bookQueueParams.bookName || "",
+            },
+          },
+        ],
+      },
+    });
+
+    if (!bookQueues) {
+      throw new Error("BookQueue entry not found");
+    }
+
+    return bookQueues;
   }
 );

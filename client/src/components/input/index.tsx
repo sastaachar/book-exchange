@@ -6,7 +6,13 @@ type CuteInputProps = {
   onChange?: (value: string) => unknown;
   value?: string;
   type?: React.HTMLInputTypeAttribute;
-};
+} & Omit<
+  React.DetailedHTMLProps<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  >,
+  "onChange"
+>;
 
 const CuteInput: React.FC<CuteInputProps> = ({
   onChange,
@@ -25,7 +31,7 @@ const CuteInput: React.FC<CuteInputProps> = ({
       type={restProps.type || "text"}
       value={value}
       onChange={onInputChange}
-      className={styles.cuteButton}
+      className={styles.cuteInput}
       {...restProps}
     />
   );

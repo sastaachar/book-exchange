@@ -1,6 +1,5 @@
 import { z } from "zod";
 import Validator from "validator";
-import { omit } from "lodash";
 import { prisma } from "@database";
 
 export const z_email = z.string().refine((value) => Validator.isEmail(value), {
@@ -50,10 +49,15 @@ const bookName = z.string().min(1, "Book name cannot be empty.");
 const bookAuthor = z.string().min(1, "Author name cannot be empty.");
 
 export const BookQueueSchema = z.object({
-  userId: z.number().min(1, "User ID must be a positive integer."),
   bookName,
   bookAuthor,
   exchangeLocation: z_location,
+});
+
+export const SearchBookQueueSchema = z.object({
+  bookName: z.string().optional(),
+  bookAuthor: z.string().optional(),
+  exchangeLocation: z.string().optional(),
 });
 
 export type SafeBookQueue = Awaited<ReturnType<typeof prisma.bookQueue.create>>;

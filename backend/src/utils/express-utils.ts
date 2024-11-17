@@ -13,7 +13,7 @@ const validateAndRespondOnFailure = (
   const parsedSchema = schema.safeParse(objectToVerify);
   if (!parsedSchema.success) {
     const validationError = fromError(parsedSchema.error);
-    res.status(400).send(validationError.toString());
+    res.status(400).send({ message: validationError.toString() });
     return true;
   }
   return false;
@@ -81,3 +81,17 @@ export const requestValidatedHandler = <ParamType, QueryType, RequestType>(
     return reqHandler(req as any, res, next);
   });
 };
+
+export function formatUnixToPostgresTimestamp(unixTimestamp: number): string {
+  const date = new Date(unixTimestamp * 1000); // Convert seconds to milliseconds
+
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0"); // Month is zero-indexed in JavaScript
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  const hours = String(date.getUTCHours()).padStart(2, "0");
+  const minutes = String(date.getUTCMinutes()).padStart(2, "0");
+  const seconds = String(date.getUTCSeconds()).padStart(2, "0");
+
+  // Return the formatted timestamp
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}

@@ -4,8 +4,8 @@ import { CuteButton } from "@components/button";
 import { Horizontal, Vertical } from "@components/container";
 import { CuteInput } from "@components/input";
 import { useAppContext } from "@context";
-import { authService } from "@services/auth";
-import { createUser, doesEmailExist } from "@services/user";
+import { authService } from "@services";
+import { userService } from "@services";
 import { cuteToast } from "@utils";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -33,7 +33,7 @@ export default function SignUp() {
       return;
     }
 
-    const [wrongEmail, checkEmailErr] = await doesEmailExist(email);
+    const [wrongEmail, checkEmailErr] = await userService.doesEmailExist(email);
 
     if (wrongEmail || checkEmailErr) {
       cuteToast(t("EmailAlreadyExist"), {
@@ -43,7 +43,7 @@ export default function SignUp() {
       return;
     }
 
-    const [user, createError] = await createUser({
+    const [user, createError] = await userService.createUser({
       email,
       password,
       name,
@@ -65,29 +65,41 @@ export default function SignUp() {
   };
 
   return (
-    <Vertical>
-      <Horizontal>{t("SignUp")}</Horizontal>
+    <Vertical
+      styles={{
+        height: "100%",
+        flexGrow: 1,
+      }}
+    >
+      <Vertical>
+        <Horizontal
+          styles={{
+            justifyContent: "center",
+          }}
+        >
+          {t("SignUp")}
+        </Horizontal>
 
-      <Horizontal>
-        <label>{t("Name")}</label>
-        <CuteInput value={name} onChange={setName} />
-      </Horizontal>
+        <Horizontal>
+          <label>{t("Name")}</label>
+          <CuteInput value={name} onChange={setName} />
+        </Horizontal>
 
-      <Horizontal>
-        <label>{t("Email")}</label>
-        <CuteInput value={email} onChange={setEmail} />
-      </Horizontal>
+        <Horizontal>
+          <label>{t("Email")}</label>
+          <CuteInput value={email} onChange={setEmail} />
+        </Horizontal>
 
-      <Horizontal>
-        <label>{t("Password")}</label>
-        <CuteInput value={password} onChange={setPassword} />
-      </Horizontal>
+        <Horizontal>
+          <label>{t("Password")}</label>
+          <CuteInput value={password} onChange={setPassword} />
+        </Horizontal>
 
-      <Horizontal>
-        <label>{t("ConfirmPassword")}</label>
-        <CuteInput value={passwordConfirm} onChange={setPasswordConfirm} />
-      </Horizontal>
-
+        <Horizontal>
+          <label>{t("ConfirmPassword")}</label>
+          <CuteInput value={passwordConfirm} onChange={setPasswordConfirm} />
+        </Horizontal>
+      </Vertical>
       <CuteButton onClick={handleSignUp} disabled={signUpLoading}>
         {t("SignUp")}
       </CuteButton>

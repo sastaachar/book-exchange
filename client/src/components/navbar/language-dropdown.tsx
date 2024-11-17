@@ -12,6 +12,9 @@ export const LanguageDropdown = () => {
 
   return (
     <CuteDropdown
+      styles={{
+        maxWidth: "200px",
+      }}
       value={appLanguage}
       options={[
         {

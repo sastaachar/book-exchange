@@ -1,3 +1,37 @@
 .cuteInput {
-  background-color: pink;
+  background-color: #fff; /* White background for better readability */
+  border: 1px solid #ccc; /* Subtle border for cleaner look */
+  padding: 12px 16px; /* Ample padding for comfortable typing */
+  border-radius: 8px; /* Rounded corners */
+  font-size: 16px; /* Standard font size for better readability */
+  color: #333; /* Dark text color for contrast */
+  width: 100%; /* Full width to fill parent container */
+  box-sizing: border-box; /* Ensure padding is included in width calculation */
+  transition: all 0.3s ease; /* Smooth transition for focus and hover states */
+
+  /* Adding box shadow for better visibility and a floating effect */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  &:focus {
+    outline: none; /* Remove the default outline on focus */
+    border-color: #ff3385; /* Vibrant border color on focus */
+    box-shadow: 0 0 8px rgba(255, 51, 133, 0.5); /* Focused box-shadow */
+  }
+
+  &::placeholder {
+    color: #bbb; /* Light placeholder text */
+    font-style: italic; /* Italicize the placeholder text */
+  }
+
+  /* Hover effect */
+  &:hover {
+    border-color: #ff3385; /* Change border color when hovered */
+  }
+
+  /* Disabled state */
+  &:disabled {
+    background-color: #f5f5f5; /* Light background when disabled */
+    border-color: #ddd; /* Lighter border color when disabled */
+    cursor: not-allowed; /* Change cursor to indicate the input is not interactive */
+  }
 }

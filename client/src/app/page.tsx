@@ -1,24 +1,17 @@
 "use client";
 
-import { CuteButton } from "@components/button";
 import { useAppContext } from "@context";
-import { authService, isLoggedIn } from "../services/auth";
-import { getLogger } from "@utils";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useTranslation } from "react-i18next";
+import { authService } from "@services";
 import { useEffect } from "react";
-
-const logger = getLogger("home/page");
+import { Vertical } from "@components/container";
+import { NotLoggedInHome } from "@components/notLoggedInHome";
+import { AddBookQueuePage } from "@components/loggedInApp";
 
 export default function Home() {
-  const router = useRouter();
-  const { loggedIn, setUser, setLoggedIn, user } = useAppContext();
-
-  const { t } = useTranslation();
+  const { loggedIn, setUser, setLoggedIn } = useAppContext();
 
   useEffect(() => {
-    isLoggedIn().then(([user]) => {
+    authService.isLoggedIn().then(([user]) => {
       if (user) {
         setUser(user);
         setLoggedIn(true);
@@ -27,27 +20,17 @@ export default function Home() {
   }, [setLoggedIn, setUser]);
 
   if (!loggedIn) {
-    logger.log("User not logged in, Redirecting to login");
-    queueMicrotask(() => {
-      router.push("/login");
-    });
-    return null;
+    return <NotLoggedInHome />;
   }
 
   return (
-    <div>
-      Home - {loggedIn} {JSON.stringify(user)}
-      <Link href={"/login"}>{t("Login")}</Link>
-      <CuteButton
-        onClick={async () => {
-          const [isLoggedOut, error] = await authService.logout();
-          if (isLoggedOut && !error) {
-          } else {
-          }
-        }}
-      >
-        Logout
-      </CuteButton>
-    </div>
+    <Vertical
+      styles={{
+        height: "100%",
+        flexGrow: "1",
+      }}
+    >
+      <AddBookQueuePage />
+    </Vertical>
   );
 }

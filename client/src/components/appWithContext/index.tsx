@@ -1,3 +1,4 @@
+import { Vertical } from "@components/container";
 import { Loading } from "@components/loading";
 import { Navbar } from "@components/navbar";
 import { AppProvider, useAppContext } from "@context";
@@ -11,9 +12,17 @@ export const AppWithContext: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <AppProvider>
-      <Navbar />
-      <ToastContainer />
-      {appConfigLoading ? <Loading /> : children}
+      <Vertical
+        styles={{
+          height: "100vh",
+          width: "100vw",
+          justifyContent: "space-between",
+        }}
+      >
+        <Navbar />
+        <ToastContainer />
+        {appConfigLoading ? <Loading /> : children}
+      </Vertical>
     </AppProvider>
   );
 };

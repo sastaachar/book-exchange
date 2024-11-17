@@ -14,7 +14,7 @@ export const createUser = serviceWrapper(async (args: CreateUserInput) => {
 export const updateUser = serviceWrapper(
   async (userId: number, userParams: Partial<User>) => {
     const res = await Server.post({
-      path: `/user/update/${userId}`,
+      path: `/user/${userId}/update`,
       params: userParams,
     });
     const updatedUser = (await res.json()) as User;

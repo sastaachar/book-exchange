@@ -4,9 +4,8 @@ import { CuteButton } from "@components/button";
 import { Horizontal, Vertical } from "@components/container";
 import { CuteInput } from "@components/input";
 import { useAppContext } from "@context";
-import { authService, isLoggedIn } from "../../services/auth";
+import { authService } from "@services";
 import { getLogger, cuteToast } from "@utils";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -25,7 +24,7 @@ export default function LoginPage() {
   const router = useRouter();
 
   useEffect(() => {
-    isLoggedIn().then(([user]) => {
+    authService.isLoggedIn().then(([user]) => {
       if (user) {
         setUser(user);
         setLoggedIn(true);
@@ -58,19 +57,25 @@ export default function LoginPage() {
   }
 
   return (
-    <Vertical>
-      <h1>{t("LoginPage")} - </h1>
-      {loggedIn}
-      <Horizontal>
-        <label>{t("Username")}:</label>
-        <CuteInput value={email} onChange={setEmail} />
-      </Horizontal>
-      <Horizontal>
-        <label>{t("Password")} :</label>
-        <CuteInput value={password} onChange={setPassword} type="password" />
-      </Horizontal>
-      <CuteButton onClick={handleLoginClick}>{t("Login")}</CuteButton>
-      <Link href={"/"}>{t("Home")}</Link>
+    <Vertical
+      styles={{
+        height: "100%",
+        flexGrow: 1,
+      }}
+    >
+      <Vertical>
+        <Horizontal>
+          <label>{t("Username")}:</label>
+          <CuteInput value={email} onChange={setEmail} />
+        </Horizontal>
+        <Horizontal>
+          <label>{t("Password")} :</label>
+          <CuteInput value={password} onChange={setPassword} type="password" />
+        </Horizontal>
+        <Vertical>
+          <CuteButton onClick={handleLoginClick}>{t("Login")}</CuteButton>
+        </Vertical>
+      </Vertical>
     </Vertical>
   );
 }

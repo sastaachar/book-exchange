@@ -4,7 +4,7 @@ import { LoginSchema } from "@schemas";
 import { Server } from "./common";
 import { User } from "@appTypes";
 
-const login = serviceWrapper(
+export const login = serviceWrapper(
   async (args: z.infer<typeof LoginSchema>): Promise<User> => {
     const res = await Server.post({
       path: "/auth/login",
@@ -27,9 +27,7 @@ export const isLoggedIn = serviceWrapper(async (): Promise<User> => {
 
   return resJson as User;
 });
-const logout = serviceWrapper(async (): Promise<boolean> => {
+export const logout = serviceWrapper(async (): Promise<boolean> => {
   const res = await Server.get({ path: "/auth/logout" });
   return res.ok;
 });
-
-export const authService = { logout, login, isLoggedIn };

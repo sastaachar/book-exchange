@@ -12,12 +12,14 @@ type CuteDropdownProps<T> = {
   value: T;
   options?: OptionValue<T>[];
   onSelect?: (value: T) => void;
+  styles?: React.CSSProperties;
 };
 
 export const CuteDropdown = <T,>({
   options,
   onSelect,
   value,
+  styles: propStyles,
 }: CuteDropdownProps<T>) => {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value as unknown as T;
@@ -29,6 +31,7 @@ export const CuteDropdown = <T,>({
       onChange={handleChange}
       value={value as unknown as string}
       className={styles.cuteDropdown}
+      style={propStyles}
     >
       {options?.map((option) => {
         if ("groupName" in option) {

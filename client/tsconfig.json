@@ -20,7 +20,7 @@
       }
     ],
     "paths": {
-      "@services/*": ["./src/services/*"],
+      "@services": ["./src/services"],
       "@utils": ["./src/utils"],
       "@components/*": ["./src/components/*"],
       "@context": ["./src/context"],
